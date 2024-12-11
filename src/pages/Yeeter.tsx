@@ -1,5 +1,6 @@
 import yeetLogo from "../assets/weeyeet_logo_white.png";
 import { useYeeter } from "../hooks/useYeeter";
+import { useYeeters } from "../hooks/useYeeters";
 import { useYeets } from "../hooks/useYeets";
 
 const chainid = "0x2105";
@@ -24,6 +25,15 @@ function Yeeter() {
   } = useYeets({
     chainid,
     yeeterid,
+  });
+
+  const {
+    yeeters,
+    isLoading: yeetersIsLoading,
+    isFetched: yeetersIsFetched,
+  } = useYeeters({
+    chainid,
+    filter: "open",
   });
 
   return (
@@ -51,6 +61,16 @@ function Yeeter() {
         {yeetsIsFetched && (
           <>
             <div className="json">{JSON.stringify(yeets, undefined, 2)}</div>
+          </>
+        )}
+      </div>
+
+      <div>
+        useYeeters
+        {yeetersIsLoading && <p>...loading</p>}
+        {yeetersIsFetched && (
+          <>
+            <div className="json">{JSON.stringify(yeeters, undefined, 2)}</div>
           </>
         )}
       </div>
