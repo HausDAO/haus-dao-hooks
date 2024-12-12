@@ -52,7 +52,6 @@ function Yeeter() {
         {isFetched && (
           <>
             <div className="json">{JSON.stringify(yeeter, undefined, 2)}</div>
-            <hr />
             <div className="json">{JSON.stringify(metadata, undefined, 2)}</div>
           </>
         )}

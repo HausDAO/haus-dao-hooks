@@ -53,8 +53,3 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
-div.json {
-  text-align: left;
-  font-size: 10px;
-}
