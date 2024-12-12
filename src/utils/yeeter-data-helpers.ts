@@ -1,5 +1,5 @@
 // import { formatValueTo, fromWei } from "@daohaus/utils";
-import { RecordItem, YeeterItem, YeeterMetadata } from "./types";
+import { RecordItem, YeeterItem } from "./types";
 // import { formatValueTo } from "./units";
 
 export const calcProgressPerc = (a: string, b: string) => {
