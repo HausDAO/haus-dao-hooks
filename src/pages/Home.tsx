@@ -10,8 +10,8 @@ function Home() {
       </div>
       <h1>DAOhaus DAO Hooks</h1>
       <div className="instructions">
-        <a href="https://github.com/hausDao" target="_blank">
-          setup instruction in this readme
+        <a href="https://github.com/HausDAO/haus-dao-hooks" target="_blank">
+          github repo
         </a>
         <Link to="/yeeter">yeeter hooks</Link>
         <Link to="/dao">dao hooks</Link>
