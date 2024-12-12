@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Yeeter from "./pages/Yeeter";
 import Dao from "./pages/Dao";
 import Proposal from "./pages/Proposal";
+import Member from "./pages/Member";
 
 export const Routes = () => {
   return (
@@ -11,6 +12,7 @@ export const Routes = () => {
       <Route path="/dao" element={<Dao />} />
       <Route path="/yeeter" element={<Yeeter />} />
       <Route path="/proposal" element={<Proposal />} />
+      <Route path="/member" element={<Member />} />
     </Router>
   );
 };

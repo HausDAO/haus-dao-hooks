@@ -16,6 +16,7 @@ function Home() {
         <Link to="/yeeter">yeeter hooks</Link>
         <Link to="/dao">dao hooks</Link>
         <Link to="/proposal">proposal hooks</Link>
+        <Link to="/member">member hooks</Link>
       </div>
     </>
   );

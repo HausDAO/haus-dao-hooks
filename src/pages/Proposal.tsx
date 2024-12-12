@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import yeetLogo from "../assets/weeyeet_logo_white.png";
 import { useProposal } from "../hooks/useProposal";
 
@@ -15,7 +16,9 @@ function Proposal() {
   return (
     <>
       <div>
-        <img src={yeetLogo} className="logo" alt="Yeet logo" />
+        <Link to="/">
+          <img src={yeetLogo} className="logo" alt="Yeet logo" />
+        </Link>
       </div>
       <h1>Proposal hooks</h1>
 

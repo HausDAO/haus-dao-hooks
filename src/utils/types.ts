@@ -184,3 +184,23 @@ export type VoteItem = {
     memberAddress: string;
   };
 };
+
+export type MemberItem = {
+  id: string;
+  createdAt: string;
+  txHash: string;
+  memberAddress: string;
+  shares: string;
+  loot: string;
+  sharesLootDelegateShares: string;
+  delegatingTo: string;
+  delegateShares: string;
+  delegateOfCount: string;
+  lastDelegateUpdateTxHash: string;
+  votes: {
+    txHash: string;
+    createdAt: string;
+    approved: boolean;
+    balance: string;
+  };
+};

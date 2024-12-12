@@ -259,3 +259,30 @@ export const FIND_PROPOSAL = gql`
     }
   }
 `;
+
+const memberFields = `
+  id
+  createdAt
+  txHash
+  memberAddress
+  shares
+  loot
+  sharesLootDelegateShares
+  delegatingTo
+  delegateShares
+  delegateOfCount
+  lastDelegateUpdateTxHash
+  votes {
+    txHash
+    createdAt
+    approved
+    balance
+  }`;
+
+export const FIND_MEMBER = gql`
+  query member($memberid: String!) {
+    member(id: $memberid) {
+      ${memberFields}
+    }
+  }
+`;

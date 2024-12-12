@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import yeetLogo from "../assets/weeyeet_logo_white.png";
 import { useYeeter } from "../hooks/useYeeter";
 import { useYeeters } from "../hooks/useYeeters";
@@ -39,7 +40,9 @@ function Yeeter() {
   return (
     <>
       <div>
-        <img src={yeetLogo} className="logo" alt="Yeet logo" />
+        <Link to="/">
+          <img src={yeetLogo} className="logo" alt="Yeet logo" />
+        </Link>
       </div>
       <h1>yeeter hooks</h1>
 
