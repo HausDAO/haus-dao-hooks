@@ -2,9 +2,9 @@ import { GraphQLClient } from "graphql-request";
 
 import { useQuery } from "@tanstack/react-query";
 import {
-  GET_OPEN_YEETERS,
-  GET_CLOSED_YEETERS,
-  GET_ALL_YEETERS,
+  LIST_OPEN_YEETERS,
+  LIST_CLOSED_YEETERS,
+  LIST_ALL_YEETERS,
 } from "../utils/queries";
 import { YeeterItem } from "../utils/types";
 import { useContext } from "react";
@@ -12,9 +12,9 @@ import { DaoHooksContext } from "../DaoHooksContext";
 import { getGraphUrl } from "../utils/endpoints";
 
 const QUERIES: Record<string, string> = {
-  open: GET_OPEN_YEETERS,
-  all: GET_ALL_YEETERS,
-  closed: GET_CLOSED_YEETERS,
+  open: LIST_OPEN_YEETERS,
+  all: LIST_ALL_YEETERS,
+  closed: LIST_CLOSED_YEETERS,
 };
 
 const SECONDS_IN_DAY = 86400;

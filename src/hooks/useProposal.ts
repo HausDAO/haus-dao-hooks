@@ -2,17 +2,18 @@ import { GraphQLClient } from "graphql-request";
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { FIND_DAO } from "../utils/queries";
-import { DaoItem, DaoProfile } from "../utils/types";
-import { addParsedContent } from "../utils/yeeter-data-helpers";
+import { FIND_PROPOSAL } from "../utils/queries";
+import { ProposalItem } from "../utils/types";
 import { getGraphUrl } from "../utils/endpoints";
 import { DaoHooksContext } from "../DaoHooksContext";
 
-export const useDao = ({
+export const useProposal = ({
   chainid,
+  proposalid,
   daoid,
 }: {
   chainid: string;
+  proposalid: string;
   daoid: string;
 }) => {
   const hookContext = useContext(DaoHooksContext);
@@ -30,25 +31,27 @@ export const useDao = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [`get-dao-${chainid}-${daoid}`, { chainid, daoid }],
+    queryKey: [
+      `get-proposal-${chainid}-${daoid}-${proposalid}`,
+      { chainid, daoid, proposalid },
+    ],
     queryFn: async (): Promise<{
-      dao: DaoItem;
+      proposal: ProposalItem;
     }> => {
-      const daores = (await graphQLClient.request(FIND_DAO, {
-        daoid,
+      const res = (await graphQLClient.request(FIND_PROPOSAL, {
+        proposalid: `${daoid.toLowerCase()}-proposal-${proposalid}`,
       })) as {
-        dao: DaoItem;
+        proposal: ProposalItem;
       };
-      const profile = addParsedContent<DaoProfile>(daores.dao.rawProfile[0]);
 
       return {
-        dao: { ...daores.dao, profile },
+        proposal: res.proposal,
       };
     },
   });
 
   return {
-    dao: data?.dao,
+    proposal: data?.proposal,
     ...rest,
   };
 };

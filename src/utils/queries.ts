@@ -16,7 +16,7 @@ const yeeterFields = `
   yeetCount
 `;
 
-export const GET_YEETER = gql`
+export const FIND_YEETER = gql`
   query yeeter($shamanAddress: String!) {
     yeeter(id: $shamanAddress) {
       ${yeeterFields}
@@ -24,7 +24,7 @@ export const GET_YEETER = gql`
   }
 `;
 
-export const GET_ALL_YEETERS = gql`
+export const LIST_ALL_YEETERS = gql`
   {
     yeeters(
       first: 1000, 
@@ -37,7 +37,7 @@ export const GET_ALL_YEETERS = gql`
   }
 `;
 
-export const GET_OPEN_YEETERS = gql`
+export const LIST_OPEN_YEETERS = gql`
   query yeeters($now: String!) {
     yeeters(
       first: 1000, 
@@ -51,7 +51,7 @@ export const GET_OPEN_YEETERS = gql`
   }
 `;
 
-export const GET_CLOSED_YEETERS = gql`
+export const LIST_CLOSED_YEETERS = gql`
   query yeeters($now: String!) {
     yeeters(
       first: 1000, 
@@ -83,17 +83,7 @@ export const LIST_YEETS = gql`
   }
 `;
 
-export const GET_YEETS_BY_TX = gql`
-  query yeets($txHash: String!) {
-    yeets(where: { txHash: $txHash }, first: 1) {
-      id
-      txHash
-      shares
-    }
-  }
-`;
-
-export const GET_YEETER_PROFILE = gql`
+export const FIND_YEETER_PROFILE = gql`
   query record($daoid: String!) {
     records(
       where: { dao: $daoid, table: "yeetDetails" }
@@ -180,10 +170,92 @@ const daoFields = `
   }
 `;
 
-export const GET_DAO = gql`
+export const FIND_DAO = gql`
   query dao($daoid: String!) {
     dao(id: $daoid) {
       ${daoFields}
+    }
+  }
+`;
+
+const proposalFields = `
+  id
+  createdAt
+  createdBy
+  proposedBy
+  txHash
+  proposalId
+  prevProposalId
+  proposalDataHash
+  proposalData
+  actionGasEstimate
+  details
+  title
+  description
+  proposalType
+  contentURI
+  contentURIType
+  sponsorTxHash
+  sponsored
+  selfSponsor
+  sponsor
+  sponsorTxAt
+  votingPeriod
+  votingStarts
+  votingEnds
+  gracePeriod
+  graceEnds
+  expiration
+  expirationQueryField
+  cancelledTxHash
+  cancelledBy
+  cancelled
+  cancelledTxAt
+  yesBalance
+  noBalance
+  yesVotes
+  noVotes
+  processTxHash
+  processedBy
+  processed
+  processTxAt
+  actionFailed
+  passed
+  proposalOffering
+  maxTotalSharesAndLootAtYesVote
+  tributeToken
+  tributeOffered
+  tributeTokenSymbol
+  tributeTokenDecimals
+  tributeEscrowRecipient
+  sponsorMembership {
+    memberAddress
+    shares
+    delegateShares
+  }
+  dao {
+    totalShares
+    quorumPercent
+    minRetentionPercent
+  }
+  votes {
+    id
+    txHash
+    createdAt
+    daoAddress
+    approved
+    balance
+    member {
+      id
+      memberAddress
+    }
+  }
+`;
+
+export const FIND_PROPOSAL = gql`
+  query proposal($proposalid: String!) {
+    proposal(id: $proposalid) {
+      ${proposalFields}
     }
   }
 `;

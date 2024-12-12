@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 
 import { useQuery } from "@tanstack/react-query";
-import { GET_YEETER, GET_YEETER_PROFILE } from "../utils/queries";
+import { FIND_YEETER, FIND_YEETER_PROFILE } from "../utils/queries";
 import { YeeterItem, YeeterMetadata, RecordItem } from "../utils/types";
 import {
   addParsedContent,
@@ -47,13 +47,13 @@ export const useYeeter = ({
       yeeter: YeeterItem;
       metadata: YeeterMetadata;
     }> => {
-      const yeeterRes = (await graphQLClient.request(GET_YEETER, {
+      const yeeterRes = (await graphQLClient.request(FIND_YEETER, {
         shamanAddress: yeeterid,
       })) as {
         yeeter: YeeterItem;
       };
 
-      const records = (await hausGraphQLClient.request(GET_YEETER_PROFILE, {
+      const records = (await hausGraphQLClient.request(FIND_YEETER_PROFILE, {
         daoid: yeeterRes.yeeter.dao.id,
       })) as {
         records: RecordItem[];
