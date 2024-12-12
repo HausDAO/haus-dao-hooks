@@ -1,19 +1,19 @@
 import { gql } from "graphql-request";
 
 const yeeterFields = `
-id
-createdAt
-dao {
   id
-}
-endTime
-startTime
-isShares
-multiplier
-minTribute
-goal
-balance
-yeetCount
+  createdAt
+  dao {
+    id
+  }
+  endTime
+  startTime
+  isShares
+  multiplier
+  minTribute
+  goal
+  balance
+  yeetCount
 `;
 
 export const GET_YEETER = gql`
@@ -116,6 +116,74 @@ export const GET_YEETER_PROFILE = gql`
     dao(id: $daoid) {
       id
       name
+    }
+  }
+`;
+
+const daoFields = `
+  id
+  createdAt
+  createdBy
+  txHash
+  safeAddress
+  lootPaused
+  sharesPaused
+  gracePeriod
+  votingPeriod
+  proposalOffering
+  quorumPercent
+  sponsorThreshold
+  minRetentionPercent
+  shareTokenName
+  shareTokenSymbol
+  sharesAddress
+  lootTokenName
+  lootTokenSymbol
+  lootAddress
+  totalShares
+  totalLoot
+  latestSponsoredProposalId
+  proposalCount
+  activeMemberCount
+  existingSafe
+  delegatedVaultManager
+  forwarder
+  referrer
+  name
+  rawProfile: records(
+    first: 1
+    orderBy: createdAt
+    orderDirection: desc
+    where: { table: "daoProfile" }
+  ) {
+    createdAt
+    createdBy
+    contentType
+    content
+  }
+  shamen: shaman(
+    orderBy: createdAt
+    orderDirection: desc
+  ) {
+    id
+    createdAt
+    shamanAddress
+    permissions
+  }
+  vaults (where: {active: true}){
+    id
+    createdAt
+    active
+    ragequittable
+    name
+    safeAddress
+  }
+`;
+
+export const GET_DAO = gql`
+  query dao($daoid: String!) {
+    dao(id: $daoid) {
+      ${daoFields}
     }
   }
 `;

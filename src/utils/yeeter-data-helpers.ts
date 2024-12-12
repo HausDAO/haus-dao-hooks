@@ -40,9 +40,7 @@ export const calcYeetIsFull = (yeeter: YeeterItem) => {
   return Number(yeeter.balance) >= Number(yeeter.goal);
 };
 
-export const addParsedContent = (
-  record?: RecordItem
-): YeeterMetadata | undefined => {
+export const addParsedContent = <T>(record?: RecordItem): T | undefined => {
   if (record?.contentType === "json") {
     try {
       const obj = JSON.parse(record.content);

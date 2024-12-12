@@ -71,7 +71,7 @@ export const useYeeter = ({
         isFull: yeeterRes.yeeter && calcYeetIsFull(yeeterRes.yeeter),
       } as YeeterItem;
 
-      const metadata = addParsedContent(records?.records[0]);
+      const metadata = addParsedContent<YeeterMetadata>(records?.records[0]);
 
       return {
         yeeter: yeeter,
