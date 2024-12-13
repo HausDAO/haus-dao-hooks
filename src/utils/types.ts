@@ -1,3 +1,10 @@
+export type SubgraphQueryOrderPaginationOptions = {
+  skip?: number;
+  first?: number;
+  orderBy?: string;
+  orderDirection?: "asc" | "desc";
+};
+
 export type YeeterItem = {
   id: string;
   createdAt: string;

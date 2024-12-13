@@ -178,6 +178,24 @@ export const FIND_DAO = gql`
   }
 `;
 
+export const LIST_ALL_DAOS = gql`
+  query dao(
+    $skip: Int!
+    $first: Int!
+    $orderBy: String!
+    $orderDirection: String!
+  ) {
+    daos(
+      skip: $skip
+      first: $first
+      orderBy: $orderBy
+      orderDescription: $orderDescription
+    ) {
+      ${daoFields}
+    }
+  }
+`;
+
 const proposalFields = `
   id
   createdAt
@@ -260,6 +278,26 @@ export const FIND_PROPOSAL = gql`
   }
 `;
 
+export const LIST_ALL_DAO_PROPOSALS = gql`
+  query proposal(
+    $skip: Int!
+    $first: Int!
+    $orderBy: String!
+    $orderDirection: String!
+    $daoid: String!
+  ) {
+    proposals(
+      skip: $skip
+      first: $first
+      orderBy: $orderBy
+      orderDescription: $orderDescription,
+      where: { dao: $daoid }
+    ) {
+      ${proposalFields}
+    }
+  }
+`;
+
 const memberFields = `
   id
   createdAt
@@ -282,6 +320,26 @@ const memberFields = `
 export const FIND_MEMBER = gql`
   query member($memberid: String!) {
     member(id: $memberid) {
+      ${memberFields}
+    }
+  }
+`;
+
+export const LIST_ALL_DAO_MEMBERS = gql`
+  query member(
+    $skip: Int!
+    $first: Int!
+    $orderBy: String!
+    $orderDirection: String!
+    $daoid: String!
+  ) {
+    members(
+      skip: $skip
+      first: $first
+      orderBy: $orderBy
+      orderDescription: $orderDescription,
+      where: { dao: $daoid }
+    ) {
       ${memberFields}
     }
   }
