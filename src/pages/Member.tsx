@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import yeetLogo from "../assets/weeyeet_logo_white.png";
 import { useMember } from "../hooks/useMember";
+import { useDaoMembers } from "../hooks/useDaoMembers";
 
 const chainid = "0x2105";
 const daoid = "0xf5f0798dfdcc731a164bad743e606cf0d51fd798";
@@ -11,6 +12,15 @@ function Member() {
     chainid,
     daoid,
     memberaddress,
+  });
+
+  const {
+    members,
+    isLoading: isMembersLoading,
+    isFetched: isMembersFetched,
+  } = useDaoMembers({
+    chainid,
+    daoid,
   });
 
   return (
@@ -28,6 +38,16 @@ function Member() {
         {isFetched && (
           <>
             <div className="json">{JSON.stringify(member, undefined, 2)}</div>
+          </>
+        )}
+      </div>
+
+      <div>
+        useDaoMembers
+        {isMembersLoading && <p>...loading</p>}
+        {isMembersFetched && (
+          <>
+            <div className="json">{JSON.stringify(members, undefined, 2)}</div>
           </>
         )}
       </div>
