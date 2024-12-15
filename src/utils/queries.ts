@@ -83,6 +83,32 @@ export const LIST_YEETS = gql`
   }
 `;
 
+// addtional where for the below if needed to scope to summoner referrer
+// dao_: {
+//   referrer: "${YEET24_REFERRER}"
+// }
+
+export const LIST_YEETS_FOR_ADDRESS = gql`
+  query yeets($address: String!) {
+    yeets(
+      where: { contributor: $address }
+      orderBy: createdAt
+      orderDirection: desc
+      first: 1000
+    ) {
+      id
+      createdAt
+      contributor
+      amount
+      shares
+      message
+      yeeter {
+        ${yeeterFields}
+      }
+    }
+  }
+`;
+
 export const FIND_YEETER_PROFILE = gql`
   query record($daoid: String!) {
     records(
@@ -190,6 +216,26 @@ export const LIST_ALL_DAOS = gql`
       first: $first
       orderBy: $orderBy
       orderDescription: $orderDescription
+    ) {
+      ${daoFields}
+    }
+  }
+`;
+
+export const SEARCH_DAOS = gql`
+  query dao(
+    $skip: Int!
+    $first: Int!
+    $orderBy: String!
+    $orderDirection: String!
+    $name: String!
+  ) {
+    daos(
+      skip: $skip
+      first: $first
+      orderBy: $orderBy
+      orderDescription: $orderDescription
+      where: { name_contains: $name }
     ) {
       ${daoFields}
     }
