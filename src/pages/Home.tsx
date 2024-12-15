@@ -17,6 +17,7 @@ function Home() {
         <Link to="/dao">dao hooks</Link>
         <Link to="/proposal">proposal hooks</Link>
         <Link to="/member">member hooks</Link>
+        <Link to="/search-daos">search dao hook</Link>
       </div>
     </>
   );
