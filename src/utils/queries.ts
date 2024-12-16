@@ -222,6 +222,23 @@ export const LIST_ALL_DAOS = gql`
   }
 `;
 
+// members(where: $address) {
+// id
+// createdAt
+// memberAddress
+// shares
+// loot
+// delegatingTo
+// delegateShares
+// delegateOfCount
+// votes {
+//   txHash
+//   createdAt
+//   approved
+//   balance
+// }
+// }
+
 export const SEARCH_DAOS = gql`
   query dao(
     $skip: Int!
@@ -387,6 +404,24 @@ export const LIST_ALL_DAO_MEMBERS = gql`
       where: { dao: $daoid }
     ) {
       ${memberFields}
+    }
+  }
+`;
+
+export const LIST_ALL_DAOS_FOR_ADDRESS = gql`
+  query dao(
+    $address: String!
+  ) {
+    daos(
+      first: 1000
+      orderBy: createdAt
+      orderDirection: desc
+      where: { members_: { memberAddress: $address } }
+    ) {
+      ${daoFields}
+      members(where: { memberAddress: $address }) {
+        ${memberFields}
+      }
     }
   }
 `;

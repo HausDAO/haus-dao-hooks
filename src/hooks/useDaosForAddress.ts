@@ -1,15 +1,13 @@
 import { GraphQLClient } from "graphql-request";
 
 import { useQuery } from "@tanstack/react-query";
-import { LIST_YEETS_FOR_ADDRESS } from "../utils/queries";
-import { YeeterItem, YeetsItem } from "../utils/types";
+import { LIST_ALL_DAOS_FOR_ADDRESS } from "../utils/queries";
+import { DaoItem, MemberItem } from "../utils/types";
 import { useContext } from "react";
 import { DaoHooksContext } from "../DaoHooksContext";
 import { getGraphUrl } from "../utils/endpoints";
 
-// todo: see useMemberships in monorepo
-
-export const useYeetersForAddress = ({
+export const useDaosForAddress = ({
   chainid,
   address,
 }: {
@@ -25,45 +23,25 @@ export const useYeetersForAddress = ({
   const yeeterUrl = getGraphUrl({
     chainid,
     graphKey: hookContext.config.graphKey,
-    subgraphKey: "YEETER",
+    subgraphKey: "DAOHAUS",
   });
 
   const graphQLClient = new GraphQLClient(yeeterUrl);
 
-  type YeetsWithYeeter = YeetsItem & {
-    yeeter: YeeterItem;
-  };
+  type DaosWithMembers = DaoItem &
+    {
+      members: MemberItem[];
+    }[];
 
   const { data, ...rest } = useQuery({
-    queryKey: [
-      `get-yeeters-address-${chainid}-${address}`,
-      { chainid, address },
-    ],
+    queryKey: [`get-daos-address-${chainid}-${address}`, { chainid, address }],
     queryFn: (): Promise<{
-      yeets: YeetsWithYeeter[];
-    }> => graphQLClient.request(LIST_YEETS_FOR_ADDRESS, { address }),
+      daos: DaosWithMembers;
+    }> => graphQLClient.request(LIST_ALL_DAOS_FOR_ADDRESS, { address }),
   });
 
-  const uniqYeeters = data?.yeets.reduce(
-    (
-      acc: { ids: Record<string, true>; yeeters: YeeterItem[] },
-      yeet: YeetsWithYeeter
-    ) => {
-      if (acc.ids[yeet.yeeter.id]) {
-        return acc;
-      } else {
-        acc.ids[yeet.yeeter.id] = true;
-        acc.yeeters.push(yeet.yeeter);
-
-        return acc;
-      }
-    },
-    { ids: {}, yeeters: [] }
-  );
-
   return {
-    yeeters: uniqYeeters?.yeeters,
-    allYeets: data?.yeets,
+    daos: data?.daos,
     ...rest,
   };
 };
