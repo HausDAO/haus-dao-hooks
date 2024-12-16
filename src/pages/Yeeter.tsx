@@ -7,6 +7,7 @@ import { useYeetersForAddress } from "../hooks/useYeetersForAddress";
 
 const chainid = "0x2105";
 const yeeterid = "0xc313665721f79979b2884989308b52aa25744a99";
+const address = "0x83aB8e31df35AA3281d630529C6F4bf5AC7f7aBF";
 
 function Yeeter() {
   const { yeeter, metadata, isLoading, isFetched } = useYeeter({
@@ -39,7 +40,7 @@ function Yeeter() {
     isFetched: addressYeetersIsFetched,
   } = useYeetersForAddress({
     chainid,
-    address: "0x83aB8e31df35AA3281d630529C6F4bf5AC7f7aBF",
+    address,
   });
 
   return (
