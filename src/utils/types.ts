@@ -30,7 +30,11 @@ export type RecordItem = {
   createdBy: string;
   content: string;
   contentType: string;
+  tag: string;
+  table: string;
+  queryType: string;
   dao: {
+    id: string;
     name: string;
   };
 };

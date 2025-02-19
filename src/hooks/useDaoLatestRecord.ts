@@ -1,25 +1,26 @@
-import { useContext } from "react";
 import { GraphQLClient } from "graphql-request";
+import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { FIND_DAO } from "../utils/queries";
-import { DaoItem, DaoProfile } from "../utils/types";
-import { addParsedContent } from "../utils/yeeter-data-helpers";
+import { LAST_RECORD } from "../utils/queries";
+import { RecordItem } from "../utils/types";
 import { getGraphUrl } from "../utils/endpoints";
 import { DaoHooksContext } from "../DaoHooksContext";
 
-export const useDao = ({
+export const useDaoLatestRecord = ({
   chainid,
   daoid,
+  table,
 }: {
   chainid?: string;
   daoid?: string;
+  table: string;
 }) => {
   const hookContext = useContext(DaoHooksContext);
 
   if (!hookContext || !hookContext.config.graphKey) {
     console.error(
-      "useDao: DaoHooksContext must be used within a DaoHooksProvider"
+      "useDaoLatestRecord: DaoHooksContext must be used within a DaoHooksProvider"
     );
   }
 
@@ -32,26 +33,29 @@ export const useDao = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [`get-dao-${chainid}-${daoid}`, { chainid, daoid }],
+    queryKey: [
+      `list-records-${chainid}-${daoid}-${table}`,
+      { chainid, daoid, table },
+    ],
     enabled: Boolean(chainid && daoid),
     queryFn: async (): Promise<{
-      dao: DaoItem;
+      record: RecordItem;
     }> => {
-      const daores = (await graphQLClient.request(FIND_DAO, {
+      const res = (await graphQLClient.request(LAST_RECORD, {
         daoid,
+        table,
       })) as {
-        dao: DaoItem;
+        records: RecordItem[];
       };
-      const profile = addParsedContent<DaoProfile>(daores.dao.rawProfile[0]);
 
       return {
-        dao: { ...daores.dao, profile },
+        record: res.records[0],
       };
     },
   });
 
   return {
-    dao: data?.dao,
+    record: data?.record,
     ...rest,
   };
 };

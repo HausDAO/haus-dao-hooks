@@ -12,19 +12,21 @@ export const useMember = ({
   memberaddress,
   daoid,
 }: {
-  chainid: string;
-  memberaddress: string;
-  daoid: string;
+  chainid?: string;
+  memberaddress?: string;
+  daoid?: string;
 }) => {
   const hookContext = useContext(DaoHooksContext);
 
   if (!hookContext || !hookContext.config.graphKey) {
-    throw new Error("DaoHooksContext must be used within a DaoHooksProvider");
+    console.error(
+      "useMember: DaoHooksContext must be used within a DaoHooksProvider"
+    );
   }
 
   const dhUrl = getGraphUrl({
-    chainid,
-    graphKey: hookContext.config.graphKey,
+    chainid: chainid || "",
+    graphKey: hookContext?.config.graphKey || "",
     subgraphKey: "DAOHAUS",
   });
 
@@ -35,11 +37,12 @@ export const useMember = ({
       `get-member-${chainid}-${daoid}-${memberaddress}`,
       { chainid, daoid, memberaddress },
     ],
+    enabled: Boolean(chainid && memberaddress && daoid),
     queryFn: async (): Promise<{
       member: MemberItem;
     }> => {
       const res = (await graphQLClient.request(FIND_MEMBER, {
-        memberid: `${daoid.toLowerCase()}-member-${memberaddress.toLowerCase()}`,
+        memberid: `${daoid?.toLowerCase()}-member-${memberaddress?.toLowerCase()}`,
       })) as {
         member: MemberItem;
       };

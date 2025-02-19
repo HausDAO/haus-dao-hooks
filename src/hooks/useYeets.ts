@@ -11,18 +11,20 @@ export const useYeets = ({
   chainid,
   yeeterid,
 }: {
-  chainid: string;
-  yeeterid: string;
+  chainid?: string;
+  yeeterid?: string;
 }) => {
   const hookContext = useContext(DaoHooksContext);
 
   if (!hookContext || !hookContext.config.graphKey) {
-    throw new Error("DaoHooksContext must be used within a DaoHooksProvider");
+    console.error(
+      "useYeets: DaoHooksContext must be used within a DaoHooksProvider"
+    );
   }
 
   const yeeterUrl = getGraphUrl({
-    chainid,
-    graphKey: hookContext.config.graphKey,
+    chainid: chainid || "",
+    graphKey: hookContext?.config.graphKey || "",
     subgraphKey: "YEETER",
   });
 
@@ -30,6 +32,7 @@ export const useYeets = ({
 
   const { data, ...rest } = useQuery({
     queryKey: [`list-yeets-${yeeterid}`, { yeeterid }],
+    enabled: Boolean(chainid && yeeterid),
     queryFn: (): Promise<{
       yeets: YeetsItem[];
     }> => graphQLClient.request(LIST_YEETS, { shamanAddress: yeeterid }),
