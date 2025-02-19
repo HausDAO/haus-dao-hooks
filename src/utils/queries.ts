@@ -222,23 +222,6 @@ export const LIST_ALL_DAOS = gql`
   }
 `;
 
-// members(where: $address) {
-// id
-// createdAt
-// memberAddress
-// shares
-// loot
-// delegatingTo
-// delegateShares
-// delegateOfCount
-// votes {
-//   txHash
-//   createdAt
-//   approved
-//   balance
-// }
-// }
-
 export const SEARCH_DAOS = gql`
   query dao(
     $skip: Int!
@@ -423,5 +406,55 @@ export const LIST_ALL_DAOS_FOR_ADDRESS = gql`
         ${memberFields}
       }
     }
+  }
+`;
+
+const recordsFields = `
+  id
+  createdAt
+  createdBy
+  tag
+  table
+  contentType
+  content
+  queryType
+  dao {
+    id
+    name
+  }
+`;
+
+export const LIST_RECORDS = gql`
+  query record(
+    $daoid: String!
+    $table: String!
+    $skip: Int!
+    $first: Int!
+    $orderBy: String!
+    $orderDirection: String!
+  ) {
+    records(
+      skip: $skip
+      first: $first
+      orderBy: $orderBy
+      orderDescription: $orderDescription
+      where: { dao: $daoid, table: $table }
+    ) {
+      ${recordsFields}
+  }
+`;
+
+export const LAST_RECORD = gql`
+  query record(
+    $daoid: String!
+    $table: String!
+  ) {
+    records(
+      first: 1
+      orderBy: createdAt
+      orderDescription: desc
+      where: { dao: $daoid, table: $table }
+    ) {
+      ${recordsFields}
   }
 `;

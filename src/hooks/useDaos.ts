@@ -16,18 +16,20 @@ export const useDaos = ({
   chainid,
   queryOptions,
 }: {
-  chainid: string;
+  chainid?: string;
   queryOptions?: SubgraphQueryOrderPaginationOptions;
 }) => {
   const hookContext = useContext(DaoHooksContext);
 
   if (!hookContext || !hookContext.config.graphKey) {
-    throw new Error("DaoHooksContext must be used within a DaoHooksProvider");
+    console.error(
+      "useDaos: DaoHooksContext must be used within a DaoHooksProvider"
+    );
   }
 
   const dhUrl = getGraphUrl({
-    chainid,
-    graphKey: hookContext.config.graphKey,
+    chainid: chainid || "",
+    graphKey: hookContext?.config.graphKey || "",
     subgraphKey: "DAOHAUS",
   });
 
@@ -35,6 +37,7 @@ export const useDaos = ({
 
   const { data, ...rest } = useQuery({
     queryKey: [`list-daos-${chainid}`, { chainid }],
+    enabled: Boolean(chainid),
     queryFn: async (): Promise<{
       daos: DaoItem[];
     }> => {

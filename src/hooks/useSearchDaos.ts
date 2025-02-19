@@ -12,8 +12,6 @@ import { addParsedContent } from "../utils/yeeter-data-helpers";
 import { getGraphUrl } from "../utils/endpoints";
 import { DaoHooksContext } from "../DaoHooksContext";
 
-const BASE_CHAIN_ID = "0x2105";
-
 export const useSearchDaos = ({
   chainid,
   queryOptions,
@@ -26,21 +24,22 @@ export const useSearchDaos = ({
   const hookContext = useContext(DaoHooksContext);
 
   if (!hookContext || !hookContext.config.graphKey) {
-    throw new Error("DaoHooksContext must be used within a DaoHooksProvider");
+    console.error(
+      "useSearchDaos: DaoHooksContext must be used within a DaoHooksProvider"
+    );
   }
 
   const dhUrl = getGraphUrl({
-    chainid: chainid || BASE_CHAIN_ID,
-    graphKey: hookContext.config.graphKey,
+    chainid: chainid || "",
+    graphKey: hookContext?.config.graphKey || "",
     subgraphKey: "DAOHAUS",
   });
 
   const graphQLClient = new GraphQLClient(dhUrl);
 
-  console.log("query name", name);
-
   const { data, ...rest } = useQuery({
     queryKey: [`search-daos-${chainid}-${name}`, { chainid, name }],
+    enabled: Boolean(chainid),
     queryFn: async (): Promise<{
       daos: DaoItem[];
     }> => {

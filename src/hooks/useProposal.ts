@@ -12,19 +12,21 @@ export const useProposal = ({
   proposalid,
   daoid,
 }: {
-  chainid: string;
-  proposalid: string;
-  daoid: string;
+  chainid?: string;
+  proposalid?: string;
+  daoid?: string;
 }) => {
   const hookContext = useContext(DaoHooksContext);
 
   if (!hookContext || !hookContext.config.graphKey) {
-    throw new Error("DaoHooksContext must be used within a DaoHooksProvider");
+    console.error(
+      "useProposal: DaoHooksContext must be used within a DaoHooksProvider"
+    );
   }
 
   const dhUrl = getGraphUrl({
-    chainid,
-    graphKey: hookContext.config.graphKey,
+    chainid: chainid || "",
+    graphKey: hookContext?.config.graphKey || "",
     subgraphKey: "DAOHAUS",
   });
 
@@ -35,11 +37,12 @@ export const useProposal = ({
       `get-proposal-${chainid}-${daoid}-${proposalid}`,
       { chainid, daoid, proposalid },
     ],
+    enabled: Boolean(chainid && proposalid && daoid),
     queryFn: async (): Promise<{
       proposal: ProposalItem;
     }> => {
       const res = (await graphQLClient.request(FIND_PROPOSAL, {
-        proposalid: `${daoid.toLowerCase()}-proposal-${proposalid}`,
+        proposalid: `${daoid?.toLowerCase()}-proposal-${proposalid}`,
       })) as {
         proposal: ProposalItem;
       };
