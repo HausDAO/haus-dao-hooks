@@ -5,10 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { LIST_RECORDS } from "../utils/queries";
 import {
   RecordItem,
+  RecordItemParsed,
   SubgraphQueryOrderPaginationOptions,
 } from "../utils/types";
 import { getGraphUrl } from "../utils/endpoints";
 import { DaoHooksContext } from "../DaoHooksContext";
+import { addParsedContent } from "../utils/yeeter-data-helpers";
 
 export const useDaoListRecords = ({
   chainid,
@@ -44,7 +46,7 @@ export const useDaoListRecords = ({
     ],
     enabled: Boolean(chainid && daoid),
     queryFn: async (): Promise<{
-      records: RecordItem[];
+      records: RecordItemParsed[];
     }> => {
       const res = (await graphQLClient.request(LIST_RECORDS, {
         first: queryOptions?.first || 100,
@@ -57,8 +59,15 @@ export const useDaoListRecords = ({
         records: RecordItem[];
       };
 
+      const parsedRecords = res.records.map((r) => {
+        return {
+          ...r,
+          parsedContent: addParsedContent<Record<string, string>>(r),
+        };
+      });
+
       return {
-        records: res.records,
+        records: parsedRecords,
       };
     },
   });

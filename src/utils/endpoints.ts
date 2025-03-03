@@ -33,3 +33,25 @@ const SUBGRAPH_IDS: KeychainList = {
     "0x2105": `7yh4eHJ4qpHEiLPAk9BXhL5YgYrTrRE6gWy8x4oHyAqW`,
   },
 };
+
+export const getTokenIndexerUrl = ({
+  chainid,
+}: {
+  chainid: string;
+}): string => {
+  const url = SEQUENCE_API[chainid];
+  if (!url) {
+    console.log("invalid chainid");
+  }
+  return url;
+};
+
+const SEQUENCE_API: KEYCHAIN = {
+  "0x1": "https://mainnet-indexer.sequence.app",
+  "0x64": "https://gnosis-indexer.sequence.app",
+  "0x89": "https://polygon-indexer.sequence.app",
+  "0xa": "https://optimism-indexer.sequence.app",
+  "0xa4b1": "https://arbitrum-indexer.sequence.app",
+  "0xaa36a7": "https://sepolia-indexer.sequence.app",
+  "0x2105": "https://base-indexer.sequence.app",
+};

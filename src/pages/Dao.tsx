@@ -3,6 +3,7 @@ import yeetLogo from "../assets/weeyeet_logo_white.png";
 import { useDao } from "../hooks/useDao";
 import { useDaos } from "../hooks/useDaos";
 import { useDaosForAddress } from "../hooks/useDaosForAddress";
+import { useDaoTokenBalances } from "../hooks/useDaoTokenBalances";
 
 const chainid = "0x2105";
 const daoid = "0xf5f0798dfdcc731a164bad743e606cf0d51fd798";
@@ -31,6 +32,15 @@ function Dao() {
     address,
   });
 
+  const {
+    tokens,
+    isLoading: tokensIsLoading,
+    isFetched: tokensIsFetched,
+  } = useDaoTokenBalances({
+    chainid,
+    safeAddress: dao?.safeAddress,
+  });
+
   return (
     <>
       <div>
@@ -46,6 +56,16 @@ function Dao() {
         {isFetched && (
           <>
             <div className="json">{JSON.stringify(dao, undefined, 2)}</div>
+          </>
+        )}
+      </div>
+
+      <div>
+        useDaoTokenBalances
+        {tokensIsLoading && <p>...loading</p>}
+        {tokensIsFetched && (
+          <>
+            <div className="json">{JSON.stringify(tokens, undefined, 2)}</div>
           </>
         )}
       </div>
