@@ -6,10 +6,7 @@ import { LAST_RECORD } from "../utils/queries";
 import { RecordItem, RecordItemParsed } from "../utils/types";
 import { getGraphUrl } from "../utils/endpoints";
 import { DaoHooksContext } from "../DaoHooksContext";
-import {
-  addParsedContent,
-  addParsedContent,
-} from "../utils/yeeter-data-helpers";
+import { addParsedContent } from "../utils/yeeter-data-helpers";
 
 export const useDaoLatestRecord = ({
   chainid,
