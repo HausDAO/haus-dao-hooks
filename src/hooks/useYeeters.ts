@@ -48,7 +48,7 @@ export const useYeeters = ({
   const variables = filter !== "all" ? { now } : undefined;
 
   const { data, ...rest } = useQuery({
-    queryKey: [`get-yeeters-${chainid}-${filter}`, { chainid, filter }],
+    queryKey: [`list-yeeters`, { chainid, filter }],
     enabled: Boolean(chainid),
     queryFn: (): Promise<{
       yeeters: YeeterItem[];

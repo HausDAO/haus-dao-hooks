@@ -15,10 +15,7 @@ export const useDaoTokenBalances = ({
   });
 
   const { data, ...rest } = useQuery({
-    queryKey: [
-      `get-dao-token-balances${chainid}-${safeAddress}`,
-      { chainid, safeAddress },
-    ],
+    queryKey: [`list-dao-tokens`, { chainid, safeAddress }],
     enabled: Boolean(chainid && safeAddress && url),
     queryFn: async (): Promise<{
       tokens: TokenBalance[];

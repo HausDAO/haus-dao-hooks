@@ -36,7 +36,7 @@ export const useDaosForAddress = ({
     }[];
 
   const { data, ...rest } = useQuery({
-    queryKey: [`get-daos-address-${chainid}-${address}`, { chainid, address }],
+    queryKey: [`list-daos-address`, { chainid, address }],
     enabled: Boolean(chainid && address),
     queryFn: (): Promise<{
       daos: DaosWithMembers;

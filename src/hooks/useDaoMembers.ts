@@ -36,7 +36,7 @@ export const useDaoMembers = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [`list-members-${chainid}-${daoid}`, { chainid, daoid }],
+    queryKey: [`list-members`, { chainid, daoid }],
     enabled: Boolean(chainid && daoid),
     queryFn: async (): Promise<{
       members: MemberItem[];

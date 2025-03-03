@@ -31,7 +31,7 @@ export const useYeets = ({
   const graphQLClient = new GraphQLClient(yeeterUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [`list-yeets-${yeeterid}`, { yeeterid }],
+    queryKey: [`list-yeets`, { chainid, yeeterid }],
     enabled: Boolean(chainid && yeeterid),
     queryFn: (): Promise<{
       yeets: YeetsItem[];
