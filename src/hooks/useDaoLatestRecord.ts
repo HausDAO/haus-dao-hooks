@@ -3,9 +3,13 @@ import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { LAST_RECORD } from "../utils/queries";
-import { RecordItem } from "../utils/types";
+import { RecordItem, RecordItemParsed } from "../utils/types";
 import { getGraphUrl } from "../utils/endpoints";
 import { DaoHooksContext } from "../DaoHooksContext";
+import {
+  addParsedContent,
+  addParsedContent,
+} from "../utils/yeeter-data-helpers";
 
 export const useDaoLatestRecord = ({
   chainid,
@@ -39,7 +43,7 @@ export const useDaoLatestRecord = ({
     ],
     enabled: Boolean(chainid && daoid),
     queryFn: async (): Promise<{
-      record: RecordItem;
+      record: RecordItemParsed;
     }> => {
       const res = (await graphQLClient.request(LAST_RECORD, {
         daoid,
@@ -48,8 +52,15 @@ export const useDaoLatestRecord = ({
         records: RecordItem[];
       };
 
+      const parsedContent = addParsedContent<Record<string, string>>(
+        res.records[0]
+      );
+
       return {
-        record: res.records[0],
+        record: {
+          ...res.records[0],
+          parsedContent,
+        },
       };
     },
   });

@@ -39,6 +39,10 @@ export type RecordItem = {
   };
 };
 
+export type RecordItemParsed = RecordItem & {
+  parsedContent?: Record<string, string>;
+};
+
 export type YeeterMetadata = {
   daoId: string;
   icon?: string;
@@ -214,4 +218,16 @@ export type MemberItem = {
     approved: boolean;
     balance: string;
   };
+};
+
+export type TokenInfo = {
+  decimals?: number;
+  symbol?: string;
+  name?: string;
+  logoUri?: string | null;
+};
+export type TokenBalance = {
+  token?: TokenInfo | null;
+  tokenAddress: string | null;
+  balance: string;
 };
