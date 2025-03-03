@@ -64,7 +64,6 @@ export const useSearchDaos = ({
         daos: hydratedDaos,
       };
     },
-    enabled: !!name && !!chainid,
   });
 
   return {
