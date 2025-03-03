@@ -33,10 +33,7 @@ export const useMember = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [
-      `get-member-${chainid}-${daoid}-${memberaddress}`,
-      { chainid, daoid, memberaddress },
-    ],
+    queryKey: [`get-member`, { chainid, daoid, memberaddress }],
     enabled: Boolean(chainid && memberaddress && daoid),
     queryFn: async (): Promise<{
       member: MemberItem;

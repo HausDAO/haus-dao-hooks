@@ -33,10 +33,7 @@ export const useProposal = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [
-      `get-proposal-${chainid}-${daoid}-${proposalid}`,
-      { chainid, daoid, proposalid },
-    ],
+    queryKey: [`get-proposal`, { chainid, daoid, proposalid }],
     enabled: Boolean(chainid && proposalid && daoid),
     queryFn: async (): Promise<{
       proposal: ProposalItem;

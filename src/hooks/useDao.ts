@@ -32,7 +32,7 @@ export const useDao = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [`get-dao-${chainid}-${daoid}`, { chainid, daoid }],
+    queryKey: [`get-dao`, { chainid, daoid }],
     enabled: Boolean(chainid && daoid),
     queryFn: async (): Promise<{
       dao: DaoItem;

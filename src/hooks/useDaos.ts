@@ -36,7 +36,7 @@ export const useDaos = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [`list-daos-${chainid}`, { chainid }],
+    queryKey: [`list-daos`, { chainid }],
     enabled: Boolean(chainid),
     queryFn: async (): Promise<{
       daos: DaoItem[];

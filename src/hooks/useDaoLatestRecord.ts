@@ -34,10 +34,7 @@ export const useDaoLatestRecord = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [
-      `list-records-${chainid}-${daoid}-${table}`,
-      { chainid, daoid, table },
-    ],
+    queryKey: [`latest-record`, { chainid, daoid, table }],
     enabled: Boolean(chainid && daoid),
     queryFn: async (): Promise<{
       record: RecordItemParsed;

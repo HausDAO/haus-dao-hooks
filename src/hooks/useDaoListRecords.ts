@@ -40,10 +40,7 @@ export const useDaoListRecords = ({
   const graphQLClient = new GraphQLClient(dhUrl);
 
   const { data, ...rest } = useQuery({
-    queryKey: [
-      `list-records-${chainid}-${daoid}-${table}`,
-      { chainid, daoid, table },
-    ],
+    queryKey: [`list-records`, { chainid, daoid, table }],
     enabled: Boolean(chainid && daoid),
     queryFn: async (): Promise<{
       records: RecordItemParsed[];
