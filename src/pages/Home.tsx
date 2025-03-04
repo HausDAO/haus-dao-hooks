@@ -18,6 +18,7 @@ function Home() {
         <Link to="/proposal">proposal hooks</Link>
         <Link to="/member">member hooks</Link>
         <Link to="/search-daos">search dao hook</Link>
+        <Link to="/exit">exits hook</Link>
       </div>
     </>
   );

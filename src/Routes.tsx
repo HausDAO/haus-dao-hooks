@@ -5,6 +5,7 @@ import Dao from "./pages/Dao";
 import Proposal from "./pages/Proposal";
 import Member from "./pages/Member";
 import SearchDaos from "./pages/SearchDaos";
+import Exit from "./pages/Exit";
 
 export const Routes = () => {
   return (
@@ -15,6 +16,7 @@ export const Routes = () => {
       <Route path="/yeeter" element={<Yeeter />} />
       <Route path="/proposal" element={<Proposal />} />
       <Route path="/member" element={<Member />} />
+      <Route path="/exit" element={<Exit />} />
     </Router>
   );
 };

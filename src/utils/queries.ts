@@ -485,3 +485,30 @@ export const LIST_ALL_EXITS = gql`
     }
   }
 `;
+
+export const LIST_ALL_EXITS_FOR_ADDRESS = gql`
+  query exits(
+    $skip: Int!
+    $first: Int!
+    $orderBy: String!
+    $orderDirection: String!
+    $memberAddress: String!
+  ) {
+    rageQuits(
+      skip: $skip
+      first: $first
+      orderBy: $orderBy
+      orderDescription: $orderDescription
+      where: { member_: { memberAddress: $memberAddress } }
+    ) {
+      id
+      createdAt
+      to
+      member {
+        memberAddress
+      }
+      loot
+      shares
+    }
+  }
+`;
