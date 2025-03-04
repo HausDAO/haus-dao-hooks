@@ -231,3 +231,14 @@ export type TokenBalance = {
   tokenAddress: string | null;
   balance: string;
 };
+
+export type ExitItem = {
+  id: string;
+  createdAt: string;
+  member: {
+    memberAddress: string;
+  };
+  shares: string;
+  loot: string;
+  to: string;
+};
